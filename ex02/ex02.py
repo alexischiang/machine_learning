@@ -9,6 +9,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy.matlib
 
 
 #%%
@@ -81,21 +82,45 @@ theta = np.zeros(3)
 
 #%%
 theta
-
+#%%
+X
+#%%
+y
 
 #%%
 X.shape, theta.shape, y.shape
 
 #%% [markdown]
 # <font color=red size=3> #############请在下面写出逻辑斯蒂回归的代价函数cost(theta, X, y)，函数返回计算的代价函数值#################### </font>
+#%%
+# test 全1矩阵
+# all_ones = np.matlib.ones((100,1))
+# # print(all_ones)
+# print(all_ones.shape)
+# print('------')
+# # print(all_ones.T)
+# print(all_ones.T.shape)
+
+#%%
+# prepared for def cost()
+thetaX = np.dot(theta.T,X)
+print(thetaX)
+
+
 
 #%%
 def cost(theta, X, y):
-    
-    
-    
-    
-    
+    #part1
+    part1 = np.log(sigmoid(np.dot(theta.T,X)))
+    #建立一个(100,1)全1矩阵用来写part2
+    all_ones = np.matlib.ones((100,1))
+    #part2
+    part2 = np.log(sigmoid(all_ones.T - np.dot(theta.T,X))) 
+    #temp
+    temp = (-y)*part1 - (all_ones.T - y)*part2
+    #result
+    result = np.sum(result)/len(temp)
+    return result
 
 #%% [markdown]
 # 让我们计算初始化参数的代价函数(theta为0)。

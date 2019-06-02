@@ -23,13 +23,12 @@ plt.show()
 #%% [markdown]
 # <font color=red size=3> #############请在下面写出线性回归的代价函数（备注：函数名字为computeCost(X, y, theta)）#################### </font>
 def computeCost(X, y, theta):
-    print(X)
-    print(theta)
-    tem = np.dot(X, theta.T)
-    print(tem.shape)
-    temp = tem - y
+    # print(X)
+    # print(theta)
+    temp = np.dot(X, theta.T) - y
     print(temp)
     print(temp.shape)
+    # 把temp每个结果都平方生成一个数组后求和，除以2m
     result = [[temp[i][j]**2 for j in range(len(temp[i]))] for i in range(len(temp))]
     print(result)
     return np.sum(result)/(2*len(temp))
@@ -71,10 +70,12 @@ theta = np.matrix(np.array([0,0]))
 
 #%% [markdown]
 # theta 是一个(1,2)矩阵
-
+#%%
+X
 #%%
 y
-
+#%%
+theta
 
 #%% [markdown]
 # 看下维度
