@@ -101,26 +101,13 @@ X.shape, theta.shape, y.shape
 # # print(all_ones.T)
 # print(all_ones.T.shape)
 
-#%%
-# prepared for def cost()
-thetaX = np.dot(theta.T,X)
-print(thetaX)
+
 
 
 
 #%%
 def cost(theta, X, y):
-    #part1
-    part1 = np.log(sigmoid(np.dot(theta.T,X)))
-    #建立一个(100,1)全1矩阵用来写part2
-    all_ones = np.matlib.ones((100,1))
-    #part2
-    part2 = np.log(sigmoid(all_ones.T - np.dot(theta.T,X))) 
-    #temp
-    temp = (-y)*part1 - (all_ones.T - y)*part2
-    #result
-    result = np.sum(result)/len(temp)
-    return result
+    return np.mean(-y * np.log(sigmoid(X @ theta)) - (1 - y) * np.log(1 - sigmoid(X @ theta)))
 
 #%% [markdown]
 # 让我们计算初始化参数的代价函数(theta为0)。
