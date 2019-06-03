@@ -26,11 +26,8 @@ def computeCost(X, y, theta):
     # print(X)
     # print(theta)
     temp = np.dot(X, theta.T) - y
-    print(temp)
-    print(temp.shape)
     # 把temp每个结果都平方生成一个数组后求和，除以2m
     result = [[temp[i][j]**2 for j in range(len(temp[i]))] for i in range(len(temp))]
-    print(result)
     return np.sum(result)/(2*len(temp))
 
 #%% [markdown]
@@ -98,10 +95,16 @@ computeCost(X, y, theta)
 # <font color=red size=3> #############请在下面写出线性回归的批量梯度下降代码（备注：函数名字为gradientDescent(X, y, theta, alpha, iters) 要求返回模型参数theta 以及 每次迭代过程中的代价函数 cost）#################### </font>
 
 #%%
-#写出线性回归的梯度下降函数
+
 def gradientDescent(X, y, theta, alpha, iters):
+    # temp = [[0. 0.]]
+    # 用于存放临时的theta
     temp = np.matrix(np.zeros(theta.shape))
+    #.ravel():将多维数组转化为一维数组
+    # int(theta.ravel().shape[1]) = 2
     parameters = int(theta.ravel().shape[1])
+    # np.zeros -> matrix
+    # cost -> (1,100) matrix
     cost = np.zeros(iters)
     
     for i in range(iters):
@@ -112,7 +115,11 @@ def gradientDescent(X, y, theta, alpha, iters):
             # theta1 公式
             part_2 = np.multiply(part_1, X[:, j])
             temp[0, j] -= alpha * np.sum(part_2)/len(X)
+            print(j)
+            print(temp[0, j])
         theta = temp
+        print(theta)
+        # 用每一次迭代计算出来的theta分别计算对应的cost用于画图
         cost[i] = computeCost(X, y, theta)
     return theta, cost
 
@@ -130,45 +137,11 @@ iters = 1000
 #%%
 g, cost = gradientDescent(X, y, theta, alpha, iters)
 
-g
-
 #%% [markdown]
 # 最后，我们可以使用我们拟合的参数计算训练模型的代价函数（误差）。
 
 #%%
 computeCost(X, y, g)
-
-#%% [markdown]
-# 现在我们来绘制线性模型以及数据，直观地看出它的拟合。
-
-# #%%
-# # 设置x取值
-# x = np.linspace(data.Population.min(), data.Population.max(), 100)
-# # 设置y取值 ： J(theta) 公式
-# f = g[0, 0] + (g[0, 1] * x)
-
-# fig, ax = plt.subplots(figsize=(12,8))
-# ax.plot(x, f, 'r', label='Prediction')
-# ax.scatter(data.Population, data.Profit, label='Traning Data')
-# ax.legend(loc=2)
-# ax.set_xlabel('Population')
-# ax.set_ylabel('Profit')
-# ax.set_title('Predicted Profit vs. Population Size')
-# plt.show()
-
-# #%% [markdown]
-# # 由于梯度方程式函数也在每个训练迭代中输出一个代价的向量，所以我们也可以绘制。 请注意，代价总是降低 - 这是凸优化问题的一个例子。
-
-# #%%
-# fig, ax = plt.subplots(figsize=(12,8))
-
-# #横轴：迭代次数 ；纵轴： 误差
-# ax.plot(np.arange(iters), cost, 'r')
-# ax.set_xlabel('Iterations')
-# ax.set_ylabel('Cost')
-# ax.set_title('Error vs. Training Epoch')
-# plt.show()
-
 
 
 
@@ -179,6 +152,9 @@ alpha1 = 0.001
 alpha2 = 0.01
 iters = 1000
 
+# ====================================
+# ====================================
+# 函数重构部分：
 def draw_prepare(X,y,theta,alpha,iters):
     g, cost = gradientDescent(X, y, theta, alpha, iters)
     computeCost(X, y, g)
@@ -216,8 +192,10 @@ def draw_compare(X,y,theta,alpha1,alpha2,iters):
     g2,cost2,x2,f2 = draw_prepare(X,y,theta,alpha2,iters)
     draw_predicted(x1,f1,alpha1,x2,f2,alpha2)
     draw_cost(cost1,cost2,iters)
+# ====================================
+# ====================================
+# ====================================
 
 draw_compare(X,y,theta,alpha1,alpha2,iters)
 
 
-#%%

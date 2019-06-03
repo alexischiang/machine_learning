@@ -68,9 +68,11 @@ plt.show()
 data.insert(0, 'Ones', 1)
 
 # set X (training data) and y (target variable)
+
+# iloc[行数,列数]
 cols = data.shape[1]
 X = data.iloc[:,0:cols-1]
-y = data.iloc[:,cols-1:cols]
+y = data.iloc[:,-1]
 
 # convert to numpy arrays and initalize the parameter array theta
 X = np.array(X.values)
@@ -84,6 +86,8 @@ theta = np.zeros(3)
 theta
 #%%
 X
+#%%
+len(X)
 #%%
 y
 
@@ -107,7 +111,12 @@ X.shape, theta.shape, y.shape
 
 #%%
 def cost(theta, X, y):
-    return np.mean(-y * np.log(sigmoid(X @ theta)) - (1 - y) * np.log(1 - sigmoid(X @ theta)))
+    temp = -y * np.log(sigmoid(X @ theta)) - (1 - y) * np.log(1 - sigmoid(X @ theta))
+    result = np.mean(temp)
+    print(np.log(sigmoid(X @ theta)).shape)
+    # why 100*100?
+    print(temp.shape)
+    return result
 
 #%% [markdown]
 # 让我们计算初始化参数的代价函数(theta为0)。
@@ -127,14 +136,8 @@ cost(theta, X, y)
 
 #%%
 def gradient(theta, X, y):
-    
-    
-    
-    
-    
-    
-    
-    
+    return (1 / len(X)) * X.T @ (sigmoid(X @ theta) - y)
+   
 
 #%% [markdown]
 # 注意，我们实际上没有在这个函数中执行梯度下降，我们仅仅在计算一个梯度步长。我们可以用SciPy的“optimize”命名空间来做同样的事情。
