@@ -13,10 +13,11 @@ num_classes = 10
 # epochs : 所有样本都跑一遍
 epochs = 10
 
-# input image dimensions
+# 设置图片维度
 img_x, img_y = 28, 28
 
-# load the MNIST data set, which already splits into train and test sets for us
+# 从MINST读取数据
+# 已经分配好训练集与测试集
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 # reshape the data into a 4D tensor - (sample_number, x_img_size, y_img_size, num_channels)
@@ -39,6 +40,12 @@ print(x_test.shape[0], 'test samples')
 # categorical_crossentropy loss below
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
+
+
+# 为什么x和y转换不一样?
+
+
+
 
 model = Sequential()
 # 2D卷积层: 输出通道32 核5x5 步态1x1 激活函数relu
