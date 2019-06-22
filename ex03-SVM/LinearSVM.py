@@ -1,5 +1,15 @@
 #%% Change working directory from the workspace root to the ipynb file location. Turn this addition off with the DataScience.changeDirOnImportExport setting
 # ms-python.python added
+"""
+decision_function(X):获取数据集X到分离超平面的距离。
+fit(X, y):在数据集(X,y)上使用SVM模型。
+
+get_params([deep]):获取模型的参数。
+
+predict(X):预测数据值X的标签。
+
+score(X,y):返回给定测试集和对应标签的平均准确率
+"""
 import os
 try:
 	os.chdir(os.path.join(os.getcwd(), 'ex03-SVM'))
